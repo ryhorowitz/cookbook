@@ -1,4 +1,4 @@
-require 'faker'
+# require 'faker'
 
 puts '📃 Seeding data...'
 User.create(username: 'rywitz', password: '1234', password_confirmation: '1234')
