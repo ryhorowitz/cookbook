@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import AppContext from "../AppContext"
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
   const { setUser } = useContext(AppContext)
@@ -16,7 +16,7 @@ function Login() {
     password: '',
     confirmPassword: ''
   })
-
+  const navigate = useNavigate()
   function handleLoginFormData(e) {
     const { name, value } = e.target
     setLoginFormData({ ...loginFormData, [name]: value })
@@ -44,7 +44,7 @@ function Login() {
         if (r.ok) {
           r.json().then(user => {
             setUser(user)
-            // navigate('/home')
+            navigate('/home')
           })
         } else {
           r.json().then(e => {

@@ -2,7 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import AppContext from './AppContext'
 import Login from "./components/Login";
+import LogoutButton from './components/LogoutButton';
 import Home from './components/Home';
+
 function App() {
   const { user, setUser } = useContext(AppContext)
   const navigate = useNavigate()
@@ -18,13 +20,21 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  function handleLogout() {
+    fetch('/logout', { method: 'DELETE' })
+      .then(() => setUser(null))
+      .then(() => navigate('/login'))
+  }
   if (!user) {
     return (
-      <><Login /></>
+      <Routes>
+        <Route path="/login" element={<Login setUser={setUser} />} />
+      </Routes>
     )
   }
   return (
     <div className="App">
+      <LogoutButton logout={handleLogout} />
       <nav>
         <ul>
           <li>
@@ -44,9 +54,6 @@ function App() {
         <Route path='/shuls/:id/reviews' element={<ShulReviews />} />
         <Route path='/new-review' element={<CreateReview />} /> */}
       </Routes>
-      <Home />
-
-
     </div>
   );
 }
