@@ -71,9 +71,10 @@ function Login() {
     })
       .then(r => {
         if (r.ok) {
-          r.json().then(r => {
-            console.log('user created successfully', r)
-            // setUser(r)
+          r.json().then(newUser => {
+            console.log('user created successfully', newUser)
+            setUser(newUser)
+            navigate('/home')
           })
         } else {
           r.json().then(e => {

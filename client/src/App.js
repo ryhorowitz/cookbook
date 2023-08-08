@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import AppContext from './AppContext'
 import Login from "./components/Login";
 import LogoutButton from './components/LogoutButton';
 import Home from './components/Home';
-
+import Meals from './components/Meals';
 function App() {
   const { user, setUser } = useContext(AppContext)
   const navigate = useNavigate()
@@ -26,10 +26,13 @@ function App() {
       .then(() => navigate('/login'))
   }
   if (!user) {
+    console.log('no user block')
+    // navigate('/login')
     return (
-      <Routes>
-        <Route path="/login" element={<Login setUser={setUser} />} />
-      </Routes>
+      // <Routes>
+      //   <Route path="/login" element={<Login setUser={setUser} />} />
+      // </Routes>
+      < Login setUser={setUser} />
     )
   }
   return (
@@ -41,21 +44,26 @@ function App() {
             <Link to="/home">Home</Link>
           </li>
           <li>
-            <Link to="/recipes">Recipes</Link>
+            <Link to="/meals-categories">Meals/Categories</Link>
           </li>
           <li>
-            <Link to="/new-recipe">Write A Recipe</Link>
+            <Link to="/my-meals">My Recipes By Meal</Link>
+          </li>
+          <li>
+            <Link to="/recipes/new">Write A Recipe</Link>
           </li>
         </ul>
       </nav>
       <Routes>
         <Route path="/home" element={<Home />} />
-        {/* <Route path="/shuls" element={<Shuls />} />
-        <Route path='/shuls/:id/reviews' element={<ShulReviews />} />
-        <Route path='/new-review' element={<CreateReview />} /> */}
+        <Route path='/meals-categories' element={<Meals />} />
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </div>
   );
 }
 
 export default App;
+
+
+//creating a recipe in a new (to-me) category is the only way to add categories to my categories
