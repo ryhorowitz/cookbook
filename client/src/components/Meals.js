@@ -16,11 +16,12 @@ function Meals() {
       },
       body: JSON.stringify({ name: newMeal })
     })
-    const newMeal = await response.json()
+    const addedMeal = await response.json()
     if (response.ok) {
       // update meals list
+
     } else {
-      setErrors(Object.values(newMeal.errors))
+      setErrors(Object.values(addedMeal.errors))
     }
   }
   const mealsList = <ul>
@@ -38,6 +39,13 @@ function Meals() {
           value={newMeal}
           onChange={(e) => setNewMeal(e.target.value)}></input>
         <button onClick={addAMeal}>Submit</button>
+        {errors.length > 0 && (
+          <ul style={{ color: "red" }}>
+            {errors.map((error) => (
+              <li key={error}> {`Meal ${error}`} </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   )
