@@ -16,14 +16,14 @@ Meal.create(name: 'Snack')
 Meal.create(name: 'Dessert')
 
 20.times do
-  Recipe.create( 
+  Recipe.create(
     title: Faker::Food.dish,
     description: Faker::Food.description,
-    user_id: rand(1..5)
+    user_id: rand(1..5),
     meal_id: rand(1..5)
   )
-    # ethnic_category: Faker::Food.ethnic_category,
-    # preparation_time: Faker::Number.between(from: 10, to: 60)
+  # ethnic_category: Faker::Food.ethnic_category,
+  # preparation_time: Faker::Number.between(from: 10, to: 60)
 end
 
 puts 'Seed Complete'
