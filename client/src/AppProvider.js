@@ -7,16 +7,16 @@ const AppProvider = ({ children }) => {
 
   // You can add any user-related functions here to update the user state
   //put useEffect for recipes data
-  useEffect(() => {
-    fetch('/recipes')
-      .then(res => {
-        if (res.ok) {
+  // useEffect(() => {
+  //   fetch('/recipes')
+  //     .then(res => {
+  //       if (res.ok) {
 
-          res.json().then(recipes => setRecipes(recipes))
-        }
-      })
-      .catch(e => console.error('error is', e))
-  }, [user])
+  //         res.json().then(recipes => setRecipes(recipes))
+  //       }
+  //     })
+  //     .catch(e => console.error('error is', e))
+  // }, [user])
 
   return (
     <AppContext.Provider value={{ user, setUser, recipes, setRecipes }}>

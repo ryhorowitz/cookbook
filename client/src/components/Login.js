@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import AppContext from "../AppContext"
 // import { useNavigate } from "react-router-dom"
 
-function Login({ }) {
-
+function Login() {
+  const { setUser } = useContext(AppContext)
   // eslint-disable-next-line
   const [loginErrors, setLoginErrors] = useState([])
   const [signupErrors, setSignupErrors] = useState([])
@@ -42,7 +43,7 @@ function Login({ }) {
       .then(r => {
         if (r.ok) {
           r.json().then(user => {
-            // setUser(user)
+            setUser(user)
             // navigate('/home')
           })
         } else {
