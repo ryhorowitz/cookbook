@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :recipes, only: %i[index show create update destroy]
+  get '/meals/:id/recipes', to: 'recipes#index'
+
+  resources :recipes, only: %i[show create update destroy]
   resources :meals, only: %i[index show create]
   resources :users, only: %i[show create update destroy]
 

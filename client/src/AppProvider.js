@@ -4,7 +4,7 @@ import AppContext from './AppContext';
 const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [meals, setMeals] = useState([])
-
+  const [recipes, setRecipes] = useState([])
   // You can add any user-related functions here to update the user state
   //put useEffect for recipes data
   useEffect(() => {
@@ -18,7 +18,7 @@ const AppProvider = ({ children }) => {
   }, [user])
 
   return (
-    <AppContext.Provider value={{ user, setUser, meals, setMeals }}>
+    <AppContext.Provider value={{ user, setUser, meals, setMeals, recipes, setRecipes }}>
       {children}
     </AppContext.Provider>
   );
