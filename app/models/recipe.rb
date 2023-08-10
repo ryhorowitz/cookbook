@@ -4,4 +4,8 @@ class Recipe < ApplicationRecord
 
   validates :title, presence: true
   validates :description, presence: true
+
+  def meal_type
+    meal.name
+  end
 end

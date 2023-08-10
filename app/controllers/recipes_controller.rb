@@ -10,8 +10,9 @@ class RecipesController < ApplicationController
   def show; end
 
   def create
-    recipe = User.recipes.create(recipe_params)
+    recipe = current_user.recipes.create!(recipe_params)
     # byebug
+    render json: recipe, status: :created
   end
 
   def update; end
@@ -21,6 +22,6 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.permit(:id, :name, :title, :description)
+    params.permit(:id, :name, :title, :description, :meal_id)
   end
 end

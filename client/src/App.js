@@ -5,7 +5,7 @@ import Login from "./components/Login"
 import LogoutButton from './components/LogoutButton'
 import Home from './components/Home'
 import Meals from './components/Meals'
-import UserRecipesMealList from './components/UserRecipesMealList'
+import UserMealsList from './components/UserMealsList'
 import UserRecipesOfMeal from './components/UserRecipesOfMeal'
 import CreateRecipe from './components/CreateRecipe'
 
@@ -61,7 +61,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path='/meals-categories' element={<Meals />} />
-        <Route path='/my-meals' element={<UserRecipesMealList />} />
+        <Route path='/my-meals' element={<UserMealsList />} />
         <Route path='/meals/:id/recipes' element={<UserRecipesOfMeal />} />
         <Route path='/recipes/new' element={<CreateRecipe />}></Route>
         <Route path="*" element={<Navigate to="/home" replace />} />
