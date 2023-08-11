@@ -7,7 +7,7 @@ function UserMealsList() {
 
   function handleDelete(id) {
     console.log('id is', id)
-    fetch(`/recipe/${id}`, { method: 'DELETE' })
+    fetch(`/recipes/${id}`, { method: 'DELETE' })
   }
 
   async function handleUpdate(id) {

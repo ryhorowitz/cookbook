@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :recipe_not_found
   def index
     # current user recipes where meal.id is ...
     user = current_user
@@ -17,11 +18,24 @@ class RecipesController < ApplicationController
 
   def update; end
 
-  def destroy; end
+  def destroy
+    recipe = find_recipe
+    # byebug
+    recipe.destroy
+    head :no_content
+  end
 
   private
 
   def recipe_params
     params.permit(:id, :name, :title, :description, :meal_id)
+  end
+
+  def find_recipe
+    Recipe.find(params[:id])
+  end
+
+  def recipe_not_found
+    render json: { message: 'Recipe not found' }, status: :not_found
   end
 end

@@ -49,9 +49,11 @@ function CreateRecipe() {
       return true
     }
   }
+
   function handleMealSelection(e) {
     setRecipeForm({ ...recipeForm, meal_id: e.target.selectedOptions[0].id })
   }
+
   const mealOptions = meals.map(meal => {
     return <option
       key={meal.id}
@@ -59,6 +61,7 @@ function CreateRecipe() {
       value={meal.id}
     >{meal.name}</option>
   })
+
   mealOptions.unshift(<option
     key={0}
     id={0}
