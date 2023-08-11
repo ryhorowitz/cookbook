@@ -2,14 +2,25 @@ import React, { useContext, useState } from "react"
 import UserContext from "../AppContext"
 
 function UserMealsList() {
-  const { user } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
   const [mealRecipes, setMealRecipes] = useState([])
 
   function handleDelete(id) {
     console.log('id is', id)
     fetch(`/recipes/${id}`, { method: 'DELETE' })
+      .then(() => {
+        // then remove recipe form user.recipes array
+        // setUser is correctly running but is not rendering the page
+        setUser({
+          ...user,
+          recipes: filterOutDeletedRecipe(id)
+        })
+      })
+      .catch((e) => console.error('error is ', e.message))
   }
-
+  function filterOutDeletedRecipe(id) {
+    return user.recipes.filter(recipe => recipe.id !== id)
+  }
   async function handleUpdate(id) {
     await fetch(`/recipes/${id}`, {
       method: 'UPDATE',

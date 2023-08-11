@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import UserContext from "../AppContext"
 
 function CreateRecipe() {
-  const { meals } = useContext(UserContext)
+  const { meals, user, setUser } = useContext(UserContext)
   const [errors, setErrors] = useState([])
   const [recipeForm, setRecipeForm] = useState({
     title: '',
@@ -29,6 +29,11 @@ function CreateRecipe() {
 
     if (response.ok) {
       console.log('recipe is', recipe)
+      // add recipe to user recipes
+      setUser({
+        ...user,
+        recipes: [...user.recipes, recipe]
+      })
       navigate('/home')
     } else {
       console.error(recipe.errors)
