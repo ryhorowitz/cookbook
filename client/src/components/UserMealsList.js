@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import UserContext from "../AppContext"
 
 function UserMealsList() {
   const { user, setUser } = useContext(UserContext)
   const [mealRecipes, setMealRecipes] = useState([])
 
-  function handleDelete(id) {
+  function handleDelete(id, meal_type) {
     console.log('id is', id)
     fetch(`/recipes/${id}`, { method: 'DELETE' })
       .then(() => {
@@ -15,6 +15,10 @@ function UserMealsList() {
           ...user,
           recipes: filterOutDeletedRecipe(id)
         })
+      })
+      .then(() => {
+        console.log('filterRecipesByMeal block')
+        filterRecipesByMeal(meal_type, id)
       })
       .catch((e) => console.error('error is ', e.message))
   }
@@ -30,7 +34,16 @@ function UserMealsList() {
       body: JSON.stringify('create update form')
     })
   }
-  function filterRecipesByMeal(mealName) {
+  function filterRecipesByMeal(mealName, id) {
+    // if statement filters after deletion of recipe
+    if (id) {
+      const filteredRecipes = mealRecipes.filter(recipe => {
+        return recipe.id !== id
+      })
+      console.log('in filter RecipesByMEal if Block', filteredRecipes)
+      setMealRecipes(filteredRecipes)
+    }
+    // this filters onCLick of Meal option
     const filteredRecipes = user.recipes.filter(recipe => {
       return recipe.meal_type === mealName
     })
@@ -42,6 +55,10 @@ function UserMealsList() {
       onClick={() => { filterRecipesByMeal(meal.name) }}
     >{meal.name}</li>
   })
+
+  useEffect(() => {
+
+  }, [user])
 
   return (
     <>
@@ -59,7 +76,7 @@ function UserMealsList() {
                 <h4>{recipe.title}</h4>
                 <p>{recipe.description}</p>
                 <button onClick={() => handleUpdate(recipe.id)}>Update</button>
-                <button onClick={() => handleDelete(recipe.id)}>Delete</button>
+                <button onClick={() => handleDelete(recipe.id, recipe.meal_type)}>Delete</button>
               </li>
             })
             : null}
