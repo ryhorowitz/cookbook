@@ -19,17 +19,12 @@ function RecipeItem({ recipe, selectedMeal }) {
       })
       .catch((e) => console.error('error is ', e.message))
   }
-  console.log('selectedMeal', selectedMeal)
-  console.log('selectedMeals', user.recipes_by_meal[selectedMeal])
+
   function filterOutDeletedRecipe(id) {
     const filteredSelectMealRecipeList = user.recipes_by_meal[selectedMeal].filter(recipe => recipe.id !== id)
     if (filteredSelectMealRecipeList.length === 0) {
-
       const recipes_by_mealCopy = _.cloneDeep(user.recipes_by_meal)
-      console.log('recipes_by_mealCopy before delete', recipes_by_mealCopy)
       delete recipes_by_mealCopy[selectedMeal]
-      console.log('recipes_by_mealCopy after delete', recipes_by_mealCopy)
-
       setUser({
         ...user,
         recipes_by_meal: recipes_by_mealCopy
@@ -60,8 +55,13 @@ function RecipeItem({ recipe, selectedMeal }) {
       console.log('updated review is ', updatedRecipe)
       setUser({
         ...user,
-        recipes: updateRecipesArray(user.recipes, updatedRecipe)
+        recipes_by_meal: {
+          ...user.recipes_by_meal,
+          [selectedMeal]: updateRecipesArray(user.recipes_by_meal[selectedMeal], updatedRecipe)
+        }
       })
+
+
       setEditModal({
         title: recipe.title,
         description: recipe.description
@@ -74,7 +74,6 @@ function RecipeItem({ recipe, selectedMeal }) {
 
 
   }
-
 
   function updateRecipesArray(recipes, updatedRecipe) {
     return recipes.map(recipe => {
