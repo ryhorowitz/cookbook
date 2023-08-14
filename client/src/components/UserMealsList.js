@@ -7,24 +7,21 @@ function UserMealsList() {
   const { user } = useContext(UserContext)
   const [clickedMeal, setClickedMeal] = useState('')
   const [mealRecipes, setMealRecipes] = useState([])
-
-  // useEffect when user updates rerun mealRecipes
+  const meals = Object.keys(user.recipes_by_meal)
 
   useEffect(() => {
     filterRecipesByMeal(clickedMeal)
   }, [user, clickedMeal])
 
-  function filterRecipesByMeal(mealName, id) {
-    const filteredRecipes = user.recipes.filter(recipe => {
-      return recipe.meal_type === mealName
-    })
+  function filterRecipesByMeal(mealName) {
+    const filteredRecipes = user.recipes_by_meal[mealName] ? user.recipes_by_meal[mealName] : []
     setMealRecipes(filteredRecipes)
   }
 
-  const recipeMealsList = user.meals.map(meal => {
-    return <li key={meal.id}
-      onClick={() => { setClickedMeal(meal.name) }}
-    >{meal.name}</li>
+  const recipeMealsList = meals.map(meal => {
+    return <li key={meal}
+      onClick={() => { setClickedMeal(meal) }}
+    >{meal}</li>
   })
 
   return (
@@ -38,7 +35,7 @@ function UserMealsList() {
       <ol>{recipeMealsList}</ol>
       <div>
         <h3>
-          {mealRecipes.length > 0 ? `${mealRecipes[0].meal_type} Recipes`
+          {mealRecipes.length > 0 ? `${clickedMeal} Recipes`
             : null}
         </h3>
         <ol>

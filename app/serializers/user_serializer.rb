@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :meals, :recipes_by_meal
+  attributes :id, :username, :recipes_by_meal
   has_many :recipes
 
   # method that returns distinct meals with their recipes nested in them

@@ -37,7 +37,14 @@ function CreateRecipe() {
       setErrors(recipe.errors)
     }
   }
-
+  // function newMealForUser() {
+  //   // does the new recipe belong to a new meal category for the user?
+  //   // recipe.meal_type === any meals.name?
+  //   //search through user.meals 
+  //   //does this meal.name === recipe.meal_type?
+  //   // yes: do nithing
+  //   // no: add in the meal object to the meals array
+  // }
   function handleChange(e) {
     const { name, value } = e.target
     setRecipeForm({
