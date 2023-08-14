@@ -49,7 +49,7 @@ function CreateRecipe() {
         ...user,
         recipes_by_meal: {
           ...user.recipes_by_meal,
-          [newRecipe.meal_type]: [newRecipe]
+          [newRecipe.meal_type]: [...user.recipes_by_meal[newRecipe.meal_type], newRecipe]
         }
       })
       console.log({
@@ -64,7 +64,7 @@ function CreateRecipe() {
         ...user,
         recipes_by_meal: {
           ...user.recipes_by_meal,
-          [newRecipe.meal_type]: [...user.recipes_by_meal[newRecipe.meal_type], newRecipe]
+          [newRecipe.meal_type]: [newRecipe]
         }
       })
     }

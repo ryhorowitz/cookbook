@@ -19,6 +19,7 @@ function UserMealsList() {
   }
 
   const recipeMealsList = meals.map(meal => {
+
     return <li key={meal}
       onClick={() => { setClickedMeal(meal) }}
     >{meal}</li>
@@ -41,7 +42,7 @@ function UserMealsList() {
         <ol>
           {mealRecipes.length > 0 ?
             mealRecipes.map(recipe => {
-              return <RecipeItem key={recipe.id} recipe={recipe} />
+              return <RecipeItem key={recipe.id} recipe={recipe} selectedMeal={clickedMeal} />
             })
             : null}
         </ol>

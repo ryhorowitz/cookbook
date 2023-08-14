@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import React, { useContext, useState } from "react"
 import UserContext from "../AppContext"
 
-function RecipeItem({ recipe }) {
+function RecipeItem({ recipe, selectedMeal }) {
   const { user, setUser } = useContext(UserContext)
   const [errors, setErrors] = useState([])
   const [toggleEditModal, setToggleEditModal] = useState(false)
@@ -10,22 +11,38 @@ function RecipeItem({ recipe }) {
     description: recipe.description
   })
 
-  function handleDelete(id, meal_type) {
+  function handleDelete(id) {
     fetch(`/recipes/${id}`, { method: 'DELETE' })
-      .then(() => {
-        setUser({
-          ...user,
-          recipes: filterOutDeletedRecipe(id)
-        })
-      })
+      .then(() => { filterOutDeletedRecipe(id) })
       .then(() => {
         console.log('filterRecipesByMeal block')
       })
       .catch((e) => console.error('error is ', e.message))
   }
-
+  console.log('selectedMeal', selectedMeal)
+  console.log('selectedMeals', user.recipes_by_meal[selectedMeal])
   function filterOutDeletedRecipe(id) {
-    return user.recipes.filter(recipe => recipe.id !== id)
+    const filteredSelectMealRecipeList = user.recipes_by_meal[selectedMeal].filter(recipe => recipe.id !== id)
+    if (filteredSelectMealRecipeList.length === 0) {
+
+      const recipes_by_mealCopy = _.cloneDeep(user.recipes_by_meal)
+      console.log('recipes_by_mealCopy before delete', recipes_by_mealCopy)
+      delete recipes_by_mealCopy[selectedMeal]
+      console.log('recipes_by_mealCopy after delete', recipes_by_mealCopy)
+
+      setUser({
+        ...user,
+        recipes_by_meal: recipes_by_mealCopy
+      })
+    } else {
+      setUser({
+        ...user,
+        recipes_by_meal: {
+          ...user.recipes_by_meal,
+          [selectedMeal]: filteredSelectMealRecipeList
+        }
+      })
+    }
   }
 
   async function handleEditRecipe(e) {
