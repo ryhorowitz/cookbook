@@ -8,4 +8,12 @@ class Recipe < ApplicationRecord
   def meal_type
     meal.name
   end
+
+  def truncated
+    {
+      id: :id,
+      title: :title,
+      description: :description
+    }
+  end
 end

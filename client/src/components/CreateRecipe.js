@@ -32,19 +32,47 @@ function CreateRecipe() {
         recipes: [...user.recipes, recipe]
       })
       navigate('/home')
+      newMealForUser(recipe)
     } else {
       console.error(recipe.errors)
       setErrors(recipe.errors)
     }
   }
-  // function newMealForUser() {
-  //   // does the new recipe belong to a new meal category for the user?
-  //   // recipe.meal_type === any meals.name?
-  //   //search through user.meals 
-  //   //does this meal.name === recipe.meal_type?
-  //   // yes: do nithing
-  //   // no: add in the meal object to the meals array
-  // }
+  function newMealForUser(newRecipe) {
+    //   // does the new recipe belong to a new meal category for the user?
+    //   // recipe.meal_type === any meals.name?
+    const userMeals = Object.keys(user.recipes_by_meal)
+    console.log('newRecipe.mealType', newRecipe.meal_type)
+    if (userMeals.includes(newRecipe.meal_type)) {
+      console.log('newMealForUser', user.recipes_by_meal[newRecipe.meal_type])
+      setUser({
+        ...user,
+        recipes_by_meal: {
+          ...user.recipes_by_meal,
+          [newRecipe.meal_type]: [newRecipe]
+        }
+      })
+      console.log({
+        ...user,
+        recipes_by_meal: {
+          ...user.recipes_by_meal,
+          [newRecipe.meal_type]: [newRecipe]
+        }
+      })
+    } else {
+      setUser({
+        ...user,
+        recipes_by_meal: {
+          ...user.recipes_by_meal,
+          [newRecipe.meal_type]: [...user.recipes_by_meal[newRecipe.meal_type], newRecipe]
+        }
+      })
+    }
+    //   //search through user.meals 
+    //   //does this meal.name === recipe.meal_type?
+    //   // yes: do nithing
+    //   // no: add in the meal object to the meals array
+  }
   function handleChange(e) {
     const { name, value } = e.target
     setRecipeForm({
