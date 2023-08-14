@@ -6,7 +6,6 @@ import LogoutButton from './components/LogoutButton'
 import Home from './components/Home'
 import Meals from './components/Meals'
 import UserMealsList from './components/UserMealsList'
-import UserRecipesOfMeal from './components/UserRecipesOfMeal'
 import CreateRecipe from './components/CreateRecipe'
 
 function App() {
@@ -30,12 +29,7 @@ function App() {
       .then(() => navigate('/login'))
   }
   if (!user) {
-    console.log('no user block')
-    // navigate('/login')
     return (
-      // <Routes>
-      //   <Route path="/login" element={<Login setUser={setUser} />} />
-      // </Routes>
       < Login setUser={setUser} />
     )
   }
@@ -62,7 +56,6 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path='/meals-categories' element={<Meals />} />
         <Route path='/my-meals' element={<UserMealsList />} />
-        <Route path='/meals/:id/recipes' element={<UserRecipesOfMeal />} />
         <Route path='/recipes/new' element={<CreateRecipe />}></Route>
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>

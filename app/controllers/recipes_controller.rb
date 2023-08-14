@@ -4,7 +4,6 @@ class RecipesController < ApplicationController
     # current user recipes where meal.id is ...
     user = current_user
     recipes = user.recipes.where('meal_id = ?', params[:id])
-    # byebug
     render json: recipes, status: :ok
   end
 
@@ -12,11 +11,15 @@ class RecipesController < ApplicationController
 
   def create
     recipe = current_user.recipes.create!(recipe_params)
-    # byebug
     render json: recipe, status: :created
   end
 
-  def update; end
+  def update
+    # byebug
+    recipe = find_recipe
+    recipe.update!(recipe_params)
+    render json: recipe, status: :ok
+  end
 
   def destroy
     recipe = find_recipe

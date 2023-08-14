@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../AppContext"
 
@@ -11,10 +11,7 @@ function CreateRecipe() {
     meal_id: 0
   })
   const navigate = useNavigate()
-  // useEffect(() => {
-  //   setRecipeForm({ ...recipeForm, meal_id: meals[0].id })
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+
   async function handleSubmitRecipe(e) {
     e.preventDefault()
     if (mealIsNotChoosen()) { return }
@@ -29,7 +26,7 @@ function CreateRecipe() {
 
     if (response.ok) {
       console.log('recipe is', recipe)
-      // add recipe to user recipes
+
       setUser({
         ...user,
         recipes: [...user.recipes, recipe]

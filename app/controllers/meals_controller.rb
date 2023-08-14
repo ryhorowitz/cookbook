@@ -12,7 +12,6 @@ class MealsController < ApplicationController
 
   def create
     meal = Meal.create!(meals_params)
-    # byebug
     render json: meal, status: :created
   end
 
