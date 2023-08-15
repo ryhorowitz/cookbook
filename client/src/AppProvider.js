@@ -5,6 +5,7 @@ const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [meals, setMeals] = useState([])
   const [recipes, setRecipes] = useState([])
+
   // You can add any user-related functions here to update the user state
   //put useEffect for recipes data
   useEffect(() => {

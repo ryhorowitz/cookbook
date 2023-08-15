@@ -2,10 +2,12 @@ class UsersController < ApplicationController
   skip_before_action :authorized, only: :create
 
   def show
+    puts 'in show method from user_controller'
     render json: current_user
   end
 
   def create
+    # byebug
     user = User.create!(user_params)
     session[:user_id] = user.id
     render json: user, status: :created

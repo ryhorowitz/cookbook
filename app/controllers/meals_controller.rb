@@ -1,4 +1,5 @@
 class MealsController < ApplicationController
+  skip_before_action :authorized, only: :index
   def index
     meals = Meal.all
     render json: meals, status: :ok

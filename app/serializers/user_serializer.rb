@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :recipes_by_meal
-  has_many :recipes
+  # has_many :recipes
 
   def recipes_by_meal
     organized_recipes = {}

@@ -19,7 +19,6 @@ function UserMealsList() {
   }
 
   const recipeMealsList = meals.map(meal => {
-
     return <li key={meal}
       onClick={() => { setClickedMeal(meal) }}
     >{meal}</li>
@@ -28,11 +27,11 @@ function UserMealsList() {
   return (
     <>
       <h2>{user.username}'s Recipes by Meal</h2>
-      {user.recipes.length === 0 &&
+      {/* {user.recipes.length === 0 &&
         <>
           <h3>{user.username} has 0 recipes</h3>
           <h3>You should create some</h3>
-        </>}
+        </>} */}
       <ol>{recipeMealsList}</ol>
       <div>
         <h3>

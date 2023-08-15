@@ -15,7 +15,6 @@ class RecipesController < ApplicationController
   end
 
   def update
-    # byebug
     recipe = find_recipe
     recipe.update!(recipe_params)
     render json: recipe, status: :ok
@@ -23,7 +22,6 @@ class RecipesController < ApplicationController
 
   def destroy
     recipe = find_recipe
-    # byebug
     recipe.destroy
     head :no_content
   end
@@ -36,6 +34,7 @@ class RecipesController < ApplicationController
 
   def find_recipe
     Recipe.find(params[:id])
+    # come off the current_user.recipes
   end
 
   def recipe_not_found

@@ -7,11 +7,19 @@ class ApplicationController < ActionController::API
     return render json: { error: 'Not authorized' }, status: :unauthorized unless session.include? :user_id
   end
 
-  def current_user
-    user = User.find(session[:user_id])
+  def render_unprocessable_entity_response(invalid)
+    # byebug
+    render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
   end
 
-  def render_unprocessable_entity_response(invalid)
-    render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+  private
+
+  # what is causing this method to trigger
+  def current_user
+    # byebug
+    puts 'message in current_user method'
+    return nil unless session[:user_id]
+
+    user = User.find(session[:user_id])
   end
 end

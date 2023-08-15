@@ -27,10 +27,10 @@ function CreateRecipe() {
     if (response.ok) {
       console.log('recipe is', recipe)
 
-      setUser({
-        ...user,
-        recipes: [...user.recipes, recipe]
-      })
+      // setUser({
+      //   ...user,
+      //   recipes: [...user.recipes, recipe]
+      // })
       navigate('/home')
       newMealForUser(recipe)
     } else {
@@ -39,8 +39,6 @@ function CreateRecipe() {
     }
   }
   function newMealForUser(newRecipe) {
-    //   // does the new recipe belong to a new meal category for the user?
-    //   // recipe.meal_type === any meals.name?
     const userMeals = Object.keys(user.recipes_by_meal)
     console.log('newRecipe.mealType', newRecipe.meal_type)
     if (userMeals.includes(newRecipe.meal_type)) {

@@ -134,7 +134,7 @@ function Login() {
             name="username"
             value={signupFormData.username}
             onChange={handleSignupFormData}
-            required
+          // required
           />
         </div>
         <div>
@@ -145,7 +145,7 @@ function Login() {
             name="password"
             value={signupFormData.password}
             onChange={handleSignupFormData}
-            required
+          // required
           />
         </div>
         <div>
@@ -156,7 +156,7 @@ function Login() {
             name="confirmPassword"
             value={signupFormData.confirmPassword}
             onChange={handleSignupFormData}
-            required
+          // required
           />
         </div>
         {signupErrors.length > 0 && (
