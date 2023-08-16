@@ -7,15 +7,17 @@ function UserMealsList() {
   const { user } = useContext(UserContext)
   const [clickedMeal, setClickedMeal] = useState('')
   const [mealRecipes, setMealRecipes] = useState([])
-  const meals = Object.keys(user.recipes_by_meal)
+  const meals = user.recipes_by_meal.map(meal => meal.name)
 
   useEffect(() => {
-    filterRecipesByMeal(clickedMeal)
+    selectRecipesByMeal(clickedMeal)
   }, [user, clickedMeal])
 
-  function filterRecipesByMeal(mealName) {
-    const filteredRecipes = user.recipes_by_meal[mealName] ? user.recipes_by_meal[mealName] : []
-    setMealRecipes(filteredRecipes)
+  function selectRecipesByMeal(mealName) {
+    let selectedMeal = user.recipes_by_meal.find(meal => meal.name === mealName)
+    console.log('selectedMeal', selectedMeal)
+    selectedMeal = selectedMeal ? selectedMeal.recipes : []
+    setMealRecipes(selectedMeal)
   }
 
   const recipeMealsList = meals.map(meal => {

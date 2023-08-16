@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
   # what is causing this method to trigger
   def current_user
     # byebug
-    puts 'message in current_user method'
+    # puts 'message in current_user method'
     return nil unless session[:user_id]
 
     user = User.find(session[:user_id])

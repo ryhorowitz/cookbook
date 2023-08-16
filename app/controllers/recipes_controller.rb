@@ -34,7 +34,6 @@ class RecipesController < ApplicationController
 
   def find_recipe
     current_user.recipes.find(params[:id])
-    # come off the current_user.recipes
   end
 
   def recipe_not_found

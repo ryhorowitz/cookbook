@@ -33,6 +33,7 @@ function CreateRecipe() {
       setErrors(recipe.errors)
     }
   }
+
   function newMealForUser(newRecipe) {
     const userMeals = Object.keys(user.recipes_by_meal)
     if (userMeals.includes(newRecipe.meal_type)) {
