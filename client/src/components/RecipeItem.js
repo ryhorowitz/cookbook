@@ -53,13 +53,7 @@ function RecipeItem({ recipe, selectedMeal }) {
 
     if (res.ok) {
       console.log('updated review is ', updatedRecipe)
-      setUser({
-        ...user,
-        recipes_by_meal: {
-          ...user.recipes_by_meal,
-          [selectedMeal]: updateRecipesArray(user.recipes_by_meal[selectedMeal], updatedRecipe)
-        }
-      })
+      updateRecipesArray(updatedRecipe)
 
       setEditModal({
         title: recipe.title,
@@ -72,13 +66,34 @@ function RecipeItem({ recipe, selectedMeal }) {
     }
   }
 
-  function updateRecipesArray(recipes, updatedRecipe) {
-    return recipes.map(recipe => {
+  // update entire
+  //     recipes_by_meal:[{…}, {…}, {…}]
+  //        0:{name: "Lunch", recipes: Array(1)}
+  //        1:{name: "Dinner", recipes: Array(2)}
+  //        2:{name: "Snack", recipes: Array(1)}
+  // find which {} to go into
+  function updateRecipesArray(updatedRecipe) {
+    const mealObj = user.recipes_by_meal.find(meal => meal.name === selectedMeal)
+    // find the recipe to be update
+    const updatedRecipesArray = mealObj.recipes.map(recipe => {
       if (recipe.id === updatedRecipe.id) {
         return updatedRecipe
       } else {
         return recipe
       }
+    })
+    mealObj.recipes = updatedRecipesArray
+    const updatedMealsRecipeArray = user.recipes_by_meal.map(meal => {
+      if (meal.name === selectedMeal) {
+        return mealObj
+      } else {
+        return meal
+      }
+    })
+    // return a copy of the ob
+    setUser({
+      ...user,
+      recipes_by_meal: updatedMealsRecipeArray
     })
   }
   function handleChange(e) {

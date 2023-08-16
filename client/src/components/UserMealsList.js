@@ -14,10 +14,9 @@ function UserMealsList() {
   }, [user, clickedMeal])
 
   function selectRecipesByMeal(mealName) {
-    let selectedMeal = user.recipes_by_meal.find(meal => meal.name === mealName)
-    console.log('selectedMeal', selectedMeal)
-    selectedMeal = selectedMeal ? selectedMeal.recipes : []
-    setMealRecipes(selectedMeal)
+    const selectedMeal = user.recipes_by_meal.find(meal => meal.name === mealName)
+    const selectedMealRecipes = selectedMeal ? selectedMeal.recipes : []
+    setMealRecipes(selectedMealRecipes)
   }
 
   const recipeMealsList = meals.map(meal => {
