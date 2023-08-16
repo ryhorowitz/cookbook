@@ -26,11 +26,6 @@ function CreateRecipe() {
 
     if (response.ok) {
       console.log('recipe is', recipe)
-
-      // setUser({
-      //   ...user,
-      //   recipes: [...user.recipes, recipe]
-      // })
       navigate('/home')
       newMealForUser(recipe)
     } else {
@@ -40,7 +35,6 @@ function CreateRecipe() {
   }
   function newMealForUser(newRecipe) {
     const userMeals = Object.keys(user.recipes_by_meal)
-    console.log('newRecipe.mealType', newRecipe.meal_type)
     if (userMeals.includes(newRecipe.meal_type)) {
       console.log('newMealForUser', user.recipes_by_meal[newRecipe.meal_type])
       setUser({
@@ -66,10 +60,6 @@ function CreateRecipe() {
         }
       })
     }
-    //   //search through user.meals 
-    //   //does this meal.name === recipe.meal_type?
-    //   // yes: do nithing
-    //   // no: add in the meal object to the meals array
   }
   function handleChange(e) {
     const { name, value } = e.target

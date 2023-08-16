@@ -6,8 +6,6 @@ const AppProvider = ({ children }) => {
   const [meals, setMeals] = useState([])
   const [recipes, setRecipes] = useState([])
 
-  // You can add any user-related functions here to update the user state
-  //put useEffect for recipes data
   useEffect(() => {
     fetch('/meals')
       .then(res => {

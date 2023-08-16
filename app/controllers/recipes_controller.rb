@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
   end
 
   def find_recipe
-    Recipe.find(params[:id])
+    current_user.recipes.find(params[:id])
     # come off the current_user.recipes
   end
 

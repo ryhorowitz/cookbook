@@ -61,7 +61,6 @@ function RecipeItem({ recipe, selectedMeal }) {
         }
       })
 
-
       setEditModal({
         title: recipe.title,
         description: recipe.description
@@ -71,8 +70,6 @@ function RecipeItem({ recipe, selectedMeal }) {
       console.error('errors', updatedRecipe)
       setErrors(Object.values(updatedRecipe.errors))
     }
-
-
   }
 
   function updateRecipesArray(recipes, updatedRecipe) {
