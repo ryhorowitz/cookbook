@@ -21,6 +21,37 @@ function RecipeItem({ recipe, selectedMeal }) {
   }
 
   function filterOutDeletedRecipe(id) {
+    const meal = findMealObj()
+    const recipeListWithoutDeletedRecipe = meal.recipes.filter(recipe => recipe.id !== id)
+    if (recipeListWithoutDeletedRecipe.length === 0) {
+      // remove the meal object from the recipes_by_meal array
+      const recipesByMealWithoutMealObj = user.recipes_by_meal.filter(meal => meal.name !== selectedMeal)
+      setUser({
+        ...user,
+        recipes_by_meal: recipesByMealWithoutMealObj
+      })
+    } else {
+      console.log('in else block of filterOutDeletedRecipe')
+      console.log('recipeListWithoutDeletedRecipe', recipeListWithoutDeletedRecipe)
+      // find the mealObj and update that meals meal.recipes prop
+      meal.recipes = recipeListWithoutDeletedRecipe
+      const updatedMealsArray = user.recipes_by_meal.map(m => {
+        if (m.name === meal.name) {
+          return meal
+        } else {
+          return m
+        }
+      })
+      console.log('updatedMealsArray', updatedMealsArray)
+      setUser({
+        ...user,
+        // the line below is the issue
+        recipes_by_meal: updatedMealsArray
+      })
+    }
+
+
+
     const filteredSelectMealRecipeList = user.recipes_by_meal[selectedMeal].filter(recipe => recipe.id !== id)
     if (filteredSelectMealRecipeList.length === 0) {
       const recipes_by_mealCopy = _.cloneDeep(user.recipes_by_meal)
@@ -65,15 +96,13 @@ function RecipeItem({ recipe, selectedMeal }) {
       setErrors(Object.values(updatedRecipe.errors))
     }
   }
+  function findMealObj() {
+    return user.recipes_by_meal.find(meal => meal.name === selectedMeal)
+  }
 
-  // update entire
-  //     recipes_by_meal:[{…}, {…}, {…}]
-  //        0:{name: "Lunch", recipes: Array(1)}
-  //        1:{name: "Dinner", recipes: Array(2)}
-  //        2:{name: "Snack", recipes: Array(1)}
-  // find which {} to go into
   function updateRecipesArray(updatedRecipe) {
-    const mealObj = user.recipes_by_meal.find(meal => meal.name === selectedMeal)
+    // const mealObj = user.recipes_by_meal.find(meal => meal.name === selectedMeal)
+    const mealObj = findMealObj()
     // find the recipe to be update
     const updatedRecipesArray = mealObj.recipes.map(recipe => {
       if (recipe.id === updatedRecipe.id) {
@@ -83,6 +112,7 @@ function RecipeItem({ recipe, selectedMeal }) {
       }
     })
     mealObj.recipes = updatedRecipesArray
+    // update the array of meal objs
     const updatedMealsRecipeArray = user.recipes_by_meal.map(meal => {
       if (meal.name === selectedMeal) {
         return mealObj
@@ -90,7 +120,6 @@ function RecipeItem({ recipe, selectedMeal }) {
         return meal
       }
     })
-    // return a copy of the ob
     setUser({
       ...user,
       recipes_by_meal: updatedMealsRecipeArray

@@ -25,42 +25,76 @@ function CreateRecipe() {
     const recipe = await response.json()
 
     if (response.ok) {
-      console.log('recipe is', recipe)
       navigate('/home')
-      newMealForUser(recipe)
+      addNewMealToUser(recipe)
+      console.log('recipe is', recipe)
     } else {
       console.error(recipe.errors)
       setErrors(recipe.errors)
     }
   }
 
-  function newMealForUser(newRecipe) {
-    const userMeals = Object.keys(user.recipes_by_meal)
-    if (userMeals.includes(newRecipe.meal_type)) {
-      console.log('newMealForUser', user.recipes_by_meal[newRecipe.meal_type])
-      setUser({
-        ...user,
-        recipes_by_meal: {
-          ...user.recipes_by_meal,
-          [newRecipe.meal_type]: [...user.recipes_by_meal[newRecipe.meal_type], newRecipe]
+  function addNewMealToUser(newRecipe) {
+    // user.recipes_by_meal.find(meal => meal.name === selectedMeal)
+    // has newRecipe.meal_type
+
+    const userMeals = user.recipes_by_meal
+    // userMEals has an object with a name prop of newRecipe.meal_type
+    const specificMealObj = userMeals.find(meal => meal.name === newRecipe.meal_type)
+    console.log("specificMealObj", specificMealObj)
+    // add newRecipe to this objects recipes array
+    if (specificMealObj) {
+      const updatedMealObj = {
+        ...specificMealObj,
+        recipes: [...specificMealObj.recipes, newRecipe]
+      }
+      const updatedRecipesByMealArray = user.recipes_by_meal.map(meal => {
+        if (meal.name === newRecipe.meal_type) {
+          return updatedMealObj
+        } else {
+          return meal
         }
       })
-      console.log({
-        ...user,
-        recipes_by_meal: {
-          ...user.recipes_by_meal,
-          [newRecipe.meal_type]: [newRecipe]
-        }
-      })
-    } else {
       setUser({
         ...user,
-        recipes_by_meal: {
-          ...user.recipes_by_meal,
-          [newRecipe.meal_type]: [newRecipe]
-        }
+        recipes_by_meal: updatedRecipesByMealArray
+      })
+    } else { //this recipe needs to be added to a new meal object
+      const newRecipeObj = {
+        name: newRecipe.meal_type,
+        recipes: newRecipe
+      }
+      setUser({
+        ...user,
+        recipes_by_meal: [...user.recipes_by_meal, newRecipeObj]
       })
     }
+
+    // if (userMeals.includes(newRecipe.meal_type)) {
+    //   console.log('newMealForUser', user.recipes_by_meal[newRecipe.meal_type])
+    //   setUser({
+    //     ...user,
+    //     recipes_by_meal: {
+    //       ...user.recipes_by_meal,
+    //       [newRecipe.meal_type]: [...user.recipes_by_meal[newRecipe.meal_type], newRecipe]
+    //     }
+    //   })
+    //   console.log({
+    //     ...user,
+    //     recipes_by_meal: {
+    //       ...user.recipes_by_meal,
+    //       [newRecipe.meal_type]: [newRecipe]
+    //     }
+    //   })
+    // } else {
+    //   setUser({
+    //     ...user,
+    //     recipes_by_meal: {
+    //       ...user.recipes_by_meal,
+    //       [newRecipe.meal_type]: [newRecipe]
+    //     }
+    //   })
+    // }
   }
   function handleChange(e) {
     const { name, value } = e.target
@@ -70,7 +104,7 @@ function CreateRecipe() {
     })
   }
   function mealIsNotChoosen() {
-    if (recipeForm.meal_id === 0) {
+    if (recipeForm.meal_id === '') {
       alert('Please choose a meal')
       return true
     }

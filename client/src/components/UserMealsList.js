@@ -7,7 +7,6 @@ function UserMealsList() {
   const { user } = useContext(UserContext)
   const [clickedMeal, setClickedMeal] = useState('')
   const [mealRecipes, setMealRecipes] = useState([])
-  const meals = user.recipes_by_meal.map(meal => meal.name)
 
   useEffect(() => {
     selectRecipesByMeal(clickedMeal)
@@ -19,10 +18,10 @@ function UserMealsList() {
     setMealRecipes(selectedMealRecipes)
   }
 
-  const recipeMealsList = meals.map(meal => {
-    return <li key={meal}
-      onClick={() => { setClickedMeal(meal) }}
-    >{meal}</li>
+  const recipeMealsList = user.recipes_by_meal.map(meal => {
+    return <li key={meal.name}
+      onClick={() => { setClickedMeal(meal.name) }}
+    >{meal.name}</li>
   })
 
   return (
