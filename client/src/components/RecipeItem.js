@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useContext, useState } from "react"
 import UserContext from "../AppContext"
 
@@ -31,9 +30,6 @@ function RecipeItem({ recipe, selectedMeal }) {
         recipes_by_meal: recipesByMealWithoutMealObj
       })
     } else {
-      console.log('in else block of filterOutDeletedRecipe')
-      console.log('recipeListWithoutDeletedRecipe', recipeListWithoutDeletedRecipe)
-      // find the mealObj and update that meals meal.recipes prop
       meal.recipes = recipeListWithoutDeletedRecipe
       const updatedMealsArray = user.recipes_by_meal.map(m => {
         if (m.name === meal.name) {
@@ -42,31 +38,9 @@ function RecipeItem({ recipe, selectedMeal }) {
           return m
         }
       })
-      console.log('updatedMealsArray', updatedMealsArray)
       setUser({
         ...user,
-        // the line below is the issue
         recipes_by_meal: updatedMealsArray
-      })
-    }
-
-
-
-    const filteredSelectMealRecipeList = user.recipes_by_meal[selectedMeal].filter(recipe => recipe.id !== id)
-    if (filteredSelectMealRecipeList.length === 0) {
-      const recipes_by_mealCopy = _.cloneDeep(user.recipes_by_meal)
-      delete recipes_by_mealCopy[selectedMeal]
-      setUser({
-        ...user,
-        recipes_by_meal: recipes_by_mealCopy
-      })
-    } else {
-      setUser({
-        ...user,
-        recipes_by_meal: {
-          ...user.recipes_by_meal,
-          [selectedMeal]: filteredSelectMealRecipeList
-        }
       })
     }
   }

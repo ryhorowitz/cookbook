@@ -35,18 +35,13 @@ function CreateRecipe() {
   }
 
   function addNewMealToUser(newRecipe) {
-    // user.recipes_by_meal.find(meal => meal.name === selectedMeal)
-    // has newRecipe.meal_type
-
     const userMeals = user.recipes_by_meal
-    // userMEals has an object with a name prop of newRecipe.meal_type
-    const specificMealObj = userMeals.find(meal => meal.name === newRecipe.meal_type)
-    console.log("specificMealObj", specificMealObj)
-    // add newRecipe to this objects recipes array
-    if (specificMealObj) {
+    const mealObjIsInUserState = userMeals.find(meal => meal.name === newRecipe.meal_type)
+    // console.log('mealObjIsInUserState', mealObjIsInUserState)
+    if (mealObjIsInUserState) {
       const updatedMealObj = {
-        ...specificMealObj,
-        recipes: [...specificMealObj.recipes, newRecipe]
+        ...mealObjIsInUserState,
+        recipes: [...mealObjIsInUserState.recipes, newRecipe]
       }
       const updatedRecipesByMealArray = user.recipes_by_meal.map(meal => {
         if (meal.name === newRecipe.meal_type) {
@@ -59,44 +54,20 @@ function CreateRecipe() {
         ...user,
         recipes_by_meal: updatedRecipesByMealArray
       })
-    } else { //this recipe needs to be added to a new meal object
+    } else {
+      // console.log('mealObjIsInUserState is undefined')
       const newRecipeObj = {
         name: newRecipe.meal_type,
-        recipes: newRecipe
+        recipes: [newRecipe]
       }
       setUser({
         ...user,
         recipes_by_meal: [...user.recipes_by_meal, newRecipeObj]
       })
     }
-
-    // if (userMeals.includes(newRecipe.meal_type)) {
-    //   console.log('newMealForUser', user.recipes_by_meal[newRecipe.meal_type])
-    //   setUser({
-    //     ...user,
-    //     recipes_by_meal: {
-    //       ...user.recipes_by_meal,
-    //       [newRecipe.meal_type]: [...user.recipes_by_meal[newRecipe.meal_type], newRecipe]
-    //     }
-    //   })
-    //   console.log({
-    //     ...user,
-    //     recipes_by_meal: {
-    //       ...user.recipes_by_meal,
-    //       [newRecipe.meal_type]: [newRecipe]
-    //     }
-    //   })
-    // } else {
-    //   setUser({
-    //     ...user,
-    //     recipes_by_meal: {
-    //       ...user.recipes_by_meal,
-    //       [newRecipe.meal_type]: [newRecipe]
-    //     }
-    //   })
-    // }
   }
-  function handleChange(e) {
+
+  function handleRecipeFormChange(e) {
     const { name, value } = e.target
     setRecipeForm({
       ...recipeForm,
@@ -138,7 +109,7 @@ function CreateRecipe() {
             id="title"
             name="title"
             value={recipeForm.title}
-            onChange={handleChange}></input>
+            onChange={handleRecipeFormChange}></input>
         </div>
         <div>
           <label htmlFor="meal">Meal:</label>
@@ -158,7 +129,7 @@ function CreateRecipe() {
             rows="8"
             cols="50"
             value={recipeForm.description}
-            onChange={handleChange}></textarea>
+            onChange={handleRecipeFormChange}></textarea>
         </div>
         <button type="submit">Submit</button>
         {errors.length > 0 ?
