@@ -61,8 +61,8 @@ function RecipeItem({ recipe, selectedMeal }) {
       updateRecipesArray(updatedRecipe)
 
       setEditModal({
-        title: recipe.title,
-        description: recipe.description
+        title: updatedRecipe.title,
+        description: updatedRecipe.description
       })
       setToggleEditModal(false)
     } else {
@@ -106,6 +106,14 @@ function RecipeItem({ recipe, selectedMeal }) {
       [name]: value
     })
   }
+
+  function cancelUpdate() {
+    setToggleEditModal(!toggleEditModal)
+    setEditModal({
+      title: recipe.title,
+      description: recipe.description
+    })
+  }
   return (
     <>
       {toggleEditModal ?
@@ -141,7 +149,7 @@ function RecipeItem({ recipe, selectedMeal }) {
                 ></textarea>
               </div>
               <button type='submit'>Submit</button>
-              <button onClick={() => setToggleEditModal(!toggleEditModal)}>Cancel Update</button>
+              <button onClick={cancelUpdate}>Cancel Update</button>
             </form>
           </div >
         </li>
