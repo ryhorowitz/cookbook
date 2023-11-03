@@ -2,7 +2,7 @@
 
 ### Description
 
-A simple rails JS fullstack app that allows for users to sign up and store recipes.
+A Ruby on Rails application that allows for users to sign up and store recipes.
 
 ### Set up
 
